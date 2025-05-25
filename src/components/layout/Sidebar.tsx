@@ -7,12 +7,18 @@ import {
   MessageSquare,
   Menu,
   X,
+  Star,
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { Geist, Geist_Mono } from 'next/font/google'
+
+/* fontes */
+const geist = Geist({ subsets: ['latin'], weight: ['500', '700'] })
+const mono  = Geist_Mono({ subsets: ['latin'], weight: ['400', '700'] })
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -37,6 +43,7 @@ export default function Sidebar() {
       </button>
     )
 
+  /* Item de navegação */
   const Nav = ({
     href,
     label,
@@ -52,6 +59,7 @@ export default function Sidebar() {
         href={href}
         onClick={() => window.innerWidth < 640 && setOpen(false)}
         className={cn(
+          mono.className,                              // ← fonte mono nos itens
           'flex items-center p-3 rounded-2xl transition text-sm',
           open ? 'pl-1' : 'justify-center',
           active
@@ -71,13 +79,14 @@ export default function Sidebar() {
 
       <aside
         className={cn(
+          geist.className,                              // ← fonte Geist para título e botões
           'fixed top-0 left-0 h-screen w-64 bg-neutral-900 border-r border-white/10 z-50',
           'transition-transform duration-300',
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
         <div className="flex h-full flex-col">
-          {/* Header ----------------------------------------------------- */}
+          {/* Header -------------------------------------------------- */}
           <div className="flex items-center justify-between p-4 border-b border-white/10">
             {open && (
               <p className="font-bold text-xl bg-gradient-to-r from-turquoise to-neonpurple bg-clip-text text-transparent">
@@ -85,7 +94,6 @@ export default function Sidebar() {
               </p>
             )}
 
-            {/* X aparece somente em mobile */}
             {open && (
               <button
                 onClick={() => setOpen(false)}
@@ -97,17 +105,21 @@ export default function Sidebar() {
             )}
           </div>
 
-          {/* Navegação --------------------------------------------------- */}
+          {/* Navegação ---------------------------------------------- */}
           <nav className="flex-1 p-4 space-y-2">
-            <Nav href="/" label="Cooking" icon={ChefHat} />
-            <Nav href="/library" label="Library" icon={Monitor} />
+            <Nav href="/"            label="Cooking"      icon={ChefHat} />
+            <Nav href="/library"     label="Library"      icon={Monitor} />
+            <Nav href="/halloffame"  label="Hall of Fame" icon={Star} />
           </nav>
 
-          {/* Upgrade / Feedback (apenas com sidebar aberta) -------------- */}
+          {/* Upgrade / Feedback (apenas com sidebar aberta) --------- */}
           {open && (
             <>
               <div className="p-4">
-                <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10">
+                <div className={cn(
+                  mono.className,
+                  'bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10'
+                )}>
                   <div className="flex items-center gap-2">
                     <Rocket size={18} className="text-neonpurple" />
                     <p className="font-semibold">Upgrade plan</p>
@@ -124,7 +136,10 @@ export default function Sidebar() {
               <div className="p-4 border-t border-white/10">
                 <Link
                   href="#"
-                  className="text-sm underline text-white/70 hover:text-white flex items-center gap-2"
+                  className={cn(
+                    mono.className,
+                    'text-sm underline text-white/70 hover:text-white flex items-center gap-2'
+                  )}
                 >
                   <MessageSquare size={14} /> Feedback
                 </Link>

@@ -14,7 +14,7 @@ export default function Header() {
       <header className="mb-6 sm:hidden">
         {/* linha 1 – título + usuário + créditos */}
         <div className="flex items-start justify-between">
-          <h1 className="text-xl font-bold">Cooking</h1>
+          <h1 className="text-xl font-bold invisible select-none">Cooking</h1>
 
           <div className="flex items-center gap-3">
             <User size={18} className="text-turquoise" />
@@ -37,7 +37,7 @@ export default function Header() {
 
       {/* ---------------- DESKTOP / TABLET ( ≥ 640 px ) ---------------- */}
       <header className="hidden sm:flex relative items-start justify-between mb-8">
-        <h1 className="text-2xl font-bold">Cooking</h1>
+        <h1 className="text-2xl font-bold invisible select-none">Cooking</h1>
 
         {/* pill central */}
         <button
