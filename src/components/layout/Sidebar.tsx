@@ -16,20 +16,19 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Geist, Geist_Mono } from 'next/font/google'
 
-/* fontes */
 const geist = Geist({ subsets: ['latin'], weight: ['500', '700'] })
 const mono  = Geist_Mono({ subsets: ['latin'], weight: ['400', '700'] })
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const [open, setOpen] = useState(true)
 
-  /* Fecha por padrão em dispositivos < 640 px */
+  /* inicia FECHADA; abre depois se desktop */
+  const [open, setOpen] = useState(false)
+
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 640) setOpen(false)
+    if (window.innerWidth >= 640) setOpen(true)
   }, [])
 
-  /* Botão hambúrguer — visível apenas quando sidebar fechada */
   const FloatingToggle = () =>
     !open && (
       <button
@@ -43,7 +42,6 @@ export default function Sidebar() {
       </button>
     )
 
-  /* Item de navegação */
   const Nav = ({
     href,
     label,
@@ -59,7 +57,7 @@ export default function Sidebar() {
         href={href}
         onClick={() => window.innerWidth < 640 && setOpen(false)}
         className={cn(
-          mono.className,                              // ← fonte mono nos itens
+          mono.className,
           'flex items-center p-3 rounded-2xl transition text-sm',
           open ? 'pl-1' : 'justify-center',
           active
@@ -79,7 +77,7 @@ export default function Sidebar() {
 
       <aside
         className={cn(
-          geist.className,                              // ← fonte Geist para título e botões
+          geist.className,
           'fixed top-0 left-0 h-screen w-64 bg-neutral-900 border-r border-white/10 z-50',
           'transition-transform duration-300',
           open ? 'translate-x-0' : '-translate-x-full',

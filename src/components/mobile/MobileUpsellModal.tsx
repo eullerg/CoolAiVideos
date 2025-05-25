@@ -12,19 +12,16 @@ export default function MobileUpsellModal() {
   const { credits } = useCredits()
   const [show, setShow] = useState(false)
 
-  /* função que decide se pode abrir */
   const maybeShow = useCallback(() => {
     if (credits < 20 && !sessionStorage.getItem('upsellShown')) {
       setShow(true)
     }
   }, [credits])
 
-  /* 1) verifica na primeira montagem */
   useEffect(() => {
     maybeShow()
   }, [maybeShow])
 
-  /* 2) escuta o evento custom 'triggerUpsell' */
   useEffect(() => {
     const handler = () => maybeShow()
     window.addEventListener('triggerUpsell', handler)
@@ -41,7 +38,6 @@ export default function MobileUpsellModal() {
   return (
     <div className="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="w-full max-w-sm rounded-2xl bg-neutral-950 overflow-hidden">
-        {/* header image */}
         <div className="relative h-56">
           <Image src="/Pan2.0.png" alt="promo" fill className="object-cover" />
           <button
@@ -52,7 +48,6 @@ export default function MobileUpsellModal() {
           </button>
         </div>
 
-        {/* copy */}
         <div className="p-6 pb-4">
           <h3 className={cn('text-white text-lg font-bold mb-4', mono.className)}>
             Get Unlimited&nbsp;Access
@@ -64,11 +59,10 @@ export default function MobileUpsellModal() {
             <li>Exclusive quality</li>
           </ul>
 
-          {/* plans */}
           <div className="space-y-3">
             {[
               { title: 'Special offer', sub: '100 Credits', price: '$19.99' },
-              { title: 'Best deal', sub: '500 Credits', price: '$49.99' },
+              { title: 'Best deal',   sub: '500 Credits', price: '$49.99' },
             ].map((p) => (
               <button
                 key={p.title}

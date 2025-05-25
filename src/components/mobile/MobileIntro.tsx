@@ -56,7 +56,14 @@ export default function MobileIntro({
         </p>
 
         <button
-          onClick={() => setHidden(true)}
+          onClick={() => {
+            /* dispara o evento que o modal escuta */
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(new Event('triggerUpsell'))
+            }
+            /* inicia animação para esconder a intro */
+            setHidden(true)
+          }}
           className={cn(
             'w-full py-3 rounded-xl text-center text-neutral-900',
             'bg-gradient-to-r from-turquoise to-neonpurple',

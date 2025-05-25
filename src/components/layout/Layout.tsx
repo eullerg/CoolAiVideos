@@ -8,26 +8,26 @@ import MobileUpsellModal from '@/components/mobile/MobileUpsellModal'
 import { cn } from '@/lib/utils'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  /* ----------- detecta mobile ----------- */
+  /* detecta mobile */
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 639px)')
-    const handler = () => setIsMobile(mq.matches)
-    handler()
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    const handle = () => setIsMobile(mq.matches)
+    handle()
+    mq.addEventListener('change', handle)
+    return () => mq.removeEventListener('change', handle)
   }, [])
 
-  /* ----------- controla intro ------------ */
+  /* controla intro apenas em mobile */
   const [introSeen, setIntroSeen] = useState(false)
 
   return (
     <>
-      {/* modal de oferta (desktop + mobile) */}
+      {/* upsell modal (desktop + mobile) */}
       <MobileUpsellModal />
 
-      {/* intro apenas em mobile */}
+      {/* intro somente mobile */}
       {isMobile && !introSeen && (
         <MobileIntro onFinish={() => setIntroSeen(true)} />
       )}
@@ -45,7 +45,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      {/* tab bar só no mobile depois da intro */}
       {isMobile && introSeen && <BottomTabBar />}
     </>
   )
